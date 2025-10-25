@@ -15,9 +15,9 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    
-    fbq('init', '1898688047662876'); // твой пиксель
-    fbq('track', 'PageView'); // просмотр страницы
+
+    fbq('init', '1898688047662876');
+    fbq('track', 'PageView');
   </script>
   <noscript>
     <img height="1" width="1" style="display:none"
@@ -32,11 +32,6 @@
       font-family: sans-serif;
       text-align: center;
       padding-top: 100px;
-    }
-    a {
-      color: #58a6ff;
-      text-decoration: none;
-      font-weight: bold;
     }
     .btn {
       display: inline-block;
@@ -63,21 +58,34 @@
   </a>
 
   <script>
-    // Отслеживание клика по кнопке
+    // Проверяем, что fbq загружен
+    function fbReady(callback) {
+      if (typeof fbq === 'function') {
+        callback();
+      } else {
+        setTimeout(function() { fbReady(callback); }, 100);
+      }
+    }
+
+    // Отслеживаем клик
     document.getElementById('join-btn').addEventListener('click', function(e) {
-      e.preventDefault(); // отменяем мгновенный переход
-      fbq('track', 'Lead'); // стандартное событие Lead
-      // небольшая задержка, чтобы пиксель успел отправить данные
+      e.preventDefault();
+      fbReady(function() {
+        fbq('track', 'Lead');
+        console.log("Событие Lead отправлено в Facebook Pixel ✅");
+      });
+
+      // ждём 1 секунду перед редиректом
       setTimeout(function() {
         window.open("https://t.me/+Ww5yej-P2lYwMmNi", "_blank");
-      }, 600);
+      }, 1000);
     });
 
-    // Автоматический редирект через 2 секунды (чтобы засчитался PageView)
+    // Автоматический редирект через 3 сек. (если юзер не нажал)
     setTimeout(function() {
-      fbq('trackCustom', 'AutoRedirect'); // второе событие для проверки
+      fbq('trackCustom', 'AutoRedirect');
       window.location.href = "https://t.me/+Ww5yej-P2lYwMmNi";
-    }, 2000);
+    }, 3000);
   </script>
 </body>
 </html>
