@@ -9,18 +9,17 @@
   <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+      s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
+    }(window, document,'script', 'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1898688047662876');
     fbq('track', 'PageView');
   </script>
   <noscript>
-    <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1898688047662876&ev=PageView&noscript=1"/>
+    <img height="1" width="1" style="display:none" 
+         src="https://www.facebook.com/tr?id=1898688047662876&ev=PageView&noscript=1"/>
   </noscript>
   <!-- End Facebook Pixel Code -->
 
@@ -33,13 +32,17 @@
       padding-top: 100px;
     }
     a {
-      color: #58a6ff;
+      color: #fff;
       text-decoration: none;
       font-weight: bold;
       padding: 12px 20px;
       background: #0088cc;
       border-radius: 8px;
       display: inline-block;
+      transition: background 0.3s;
+    }
+    a:hover {
+      background: #005f99;
     }
   </style>
 </head>
@@ -51,12 +54,18 @@
   </p>
 
   <script>
-    // Функция отправки события и перехода в Telegram
     function redirectToTelegram() {
-      fbq('track', 'Lead'); // событие конверсии
+      try {
+        // Отправляем событие Lead
+        fbq('track', 'Lead');
+      } catch(e) {
+        console.log('Ошибка пикселя:', e);
+      }
+
+      // Задержка для отправки события
       setTimeout(function() {
         window.location.href = "https://t.me/+Ww5yej-P2lYwMmNi";
-      }, 1500); // даем пикселю время отправить событие
+      }, 2500); // 2.5 секунды
     }
 
     // Клик по кнопке
@@ -65,8 +74,8 @@
       redirectToTelegram();
     });
 
-    // Автоматический переход через 3 секунды
-    setTimeout(redirectToTelegram, 3000);
+    // Автоматический переход через 4 секунды
+    setTimeout(redirectToTelegram, 4000);
   </script>
 </body>
 </html>
