@@ -15,7 +15,6 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-
     fbq('init', '1898688047662876');
     fbq('track', 'PageView');
   </script>
@@ -33,59 +32,41 @@
       text-align: center;
       padding-top: 100px;
     }
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background-color: #0088cc;
-      color: white;
-      border-radius: 8px;
+    a {
+      color: #58a6ff;
       text-decoration: none;
       font-weight: bold;
-      transition: background-color 0.3s;
-    }
-    .btn:hover {
-      background-color: #00aaff;
+      padding: 12px 20px;
+      background: #0088cc;
+      border-radius: 8px;
+      display: inline-block;
     }
   </style>
 </head>
 <body>
   <h2>Переход в Telegram...</h2>
-  <p>Если не произошло автоматически — нажми кнопку ниже 👇</p>
-
-  <a href="https://t.me/+Ww5yej-P2lYwMmNi" id="join-btn" class="btn" target="_blank">
-    Join Channel
-  </a>
+  <p>
+    Если не произошло автоматически — 
+    <a href="https://t.me/+Ww5yej-P2lYwMmNi" id="join-btn" target="_blank">Join Channel</a>.
+  </p>
 
   <script>
-    // Проверяем, что fbq загружен
-    function fbReady(callback) {
-      if (typeof fbq === 'function') {
-        callback();
-      } else {
-        setTimeout(function() { fbReady(callback); }, 100);
-      }
+    // Функция отправки события и перехода в Telegram
+    function redirectToTelegram() {
+      fbq('track', 'Lead'); // событие конверсии
+      setTimeout(function() {
+        window.location.href = "https://t.me/+Ww5yej-P2lYwMmNi";
+      }, 1500); // даем пикселю время отправить событие
     }
 
-    // Отслеживаем клик
+    // Клик по кнопке
     document.getElementById('join-btn').addEventListener('click', function(e) {
       e.preventDefault();
-      fbReady(function() {
-        fbq('track', 'Lead');
-        console.log("Событие Lead отправлено в Facebook Pixel ✅");
-      });
-
-      // ждём 1 секунду перед редиректом
-      setTimeout(function() {
-        window.open("https://t.me/+Ww5yej-P2lYwMmNi", "_blank");
-      }, 1000);
+      redirectToTelegram();
     });
 
-    // Автоматический редирект через 3 сек. (если юзер не нажал)
-    setTimeout(function() {
-      fbq('trackCustom', 'AutoRedirect');
-      window.location.href = "https://t.me/+Ww5yej-P2lYwMmNi";
-    }, 3000);
+    // Автоматический переход через 3 секунды
+    setTimeout(redirectToTelegram, 3000);
   </script>
 </body>
 </html>
